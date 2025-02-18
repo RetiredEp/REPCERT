@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Approved Certificates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            width: 70%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #2ecc71;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: #2ecc71;
+            color: white;
+        }
+        a {
+            text-decoration: none;
+            color: blue;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Your Approved Certificates</h2>
+
+        <% if (certificates.length > 0) { %>
+            <table>
+                <tr>
+                    <th>Certificate ID</th>
+                    <th>IPFS Link</th>
+                    <th>Blockchain Transaction</th>
+                    <th>Issued At</th>
+                </tr>
+                <% certificates.forEach(cert => { %>
+                    <tr>
+                        <td><%= cert.certificate_id %></td>
+                        <td><a href="https://ipfs.io/ipfs/<%= cert.certificate_cid %>" target="_blank"><%= cert.certificate_cid %></a></td>
+                        <td><a href="https://sepolia.etherscan.io/tx/<%= cert.tx_hash %>" target="_blank">View on Etherscan</a></td>
+                        <td><%= cert.issued_at %></td>
+                    </tr>
+                <% }); %>
+            </table>
+        <% } else { %>
+            <p>No approved certificates found.</p>
+        <% } %>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "repcert",
+  "version": "1.0.0",
+  "description": "Its a blockchain based certificate management system",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha"
+  },
+  "keywords": [
+    "nodejs",
+    "web3",
+    "express",
+    "backend"
+  ],
+  "author": "retiredep",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.18.1",
+    "file-upload": "^0.0.0",
+    "fs-extra": "^11.3.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "pg": "^8.13.3",
+    "web3": "^4.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

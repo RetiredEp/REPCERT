@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Request Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            width: 70%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #e67e22;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: #e67e22;
+            color: white;
+        }
+        .pending { color: orange; }
+        .approved { color: green; }
+        .rejected { color: red; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Your Certificate Requests</h2>
+
+        <% if (requests.length > 0) { %>
+            <table>
+                <tr>
+                    <th>Course</th>
+                    <th>Certificate CID</th>
+                    <th>Status</th>
+                </tr>
+                <% requests.forEach(request => { %>
+                    <tr>
+                        <td><%= request.course %></td>
+                        <td><a href="https://ipfs.io/ipfs/<%= request.certificate_cid %>" target="_blank"><%= request.certificate_cid %></a></td>
+                        <td class="<%= request.status %>"><%= request.status %></td>
+                    </tr>
+                <% }); %>
+            </table>
+        <% } else { %>
+            <p>No requests found.</p>
+        <% } %>
+
+    </div>
+
+</body>
+</html>
