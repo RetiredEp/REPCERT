@@ -6,7 +6,7 @@ const router = express.Router();
 router.use(fileUpload()); // Enable file upload middleware
 
 // Student Dashboard Route
-router.get('/dashboard', (req, res) => {
+router.get('/', (req, res) => {
     res.render('student/dashboard');
 });
 

@@ -1,0 +1,37 @@
+- .env
+- .gitignore
+- ethereum
+  - ADDRESS
+  - build
+    - UniversityCertificateManagement.json
+  - compile.js
+  - contracts
+    - CertificateManagement.sol
+  - deploy.js
+  - package-lock.json
+  - package.json
+- package-lock.json
+- package.json
+- README.md
+- src
+  - config
+    - db.js
+    - ipfs.js
+  - controllers
+    - studentController.js
+  - index.js
+  - models
+    - submissionModel.js
+  - routes
+    - adminRoutes.js
+    - studentRoutes.js
+    - verifierRoutes.js
+  - views
+    - admin
+    - index.ejs
+    - student
+      - approved.ejs
+      - dashboard.ejs
+      - status.ejs
+      - submit.ejs
+    - verifier
