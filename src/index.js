@@ -2,8 +2,9 @@ const express = require('express');
 const studentRoutes = require('./routes/studentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const verifierRoutes = require('./routes/verifierRoutes');
+const authRoutes = require('./routes/authRoutes');
 const session = require('express-session');
-const flash = require('express-flash');
+const flash = require('connect-flash');
 const path = require('path');
 
 const app = express();
@@ -20,6 +21,12 @@ app.use(session({
 // Enable flash messages
 app.use(flash());
 
+// Make flash messages available in all views
+app.use((req, res, next) => {
+  res.locals.flash = req.flash();
+  next();
+});
+
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -33,6 +40,7 @@ app.get('/', (req, res) => {
 app.use('/student', studentRoutes);
 app.use('/admin', adminRoutes);
 app.use('/verifier', verifierRoutes);
+app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));

@@ -46,13 +46,15 @@
         <% if (locals.flash && flash.success) { %>
             <div class="flash-success"><%= flash.success.join(', ') %></div>
         <% } %>
-        <h1>Welcome to the Student Dashboard</h1>
+        <h1>Welcome, <%= locals.studentName %>!</h1>
+        <p>Your student ID is: <%= locals.studentId %></p>
+
         <p>Select an action:</p>
         
         <div class="dashboard-buttons">
             <a href="/student/submit" class="submit">Submit Certificate</a>
-            <a href="/student/request-status/123" class="status">Check Request Status</a>
-            <a href="/student/approved-certificates/123" class="approved">View Approved Certificates</a>
+            <a href="/student/request-status/<%= locals.studentId %>" class="status">Check Request Status</a>
+            <a href="/student/approved-certificates/<%= locals.studentId %>" class="approved">View Approved Certificates</a>
         </div>
     </div>
 
