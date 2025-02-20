@@ -27,7 +27,7 @@ router.get('/google/callback',
       req.session.studentName = req.user.displayName; // optional, if you need the name
       res.redirect('/student/dashboard');
 
-    } else if (email.endsWith('@vitap.ac.in')) {
+    } else if (email.endsWith('@vitap.ac.in') || (process.env.NODE_ENV === 'development' && email === process.env.ADMIN_OVERRIDE_EMAIL)) {
       req.session.adminEmail = email;
       res.redirect(`/admin/pending-approvals`);
     } else {
