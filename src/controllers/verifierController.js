@@ -7,7 +7,7 @@ require('dotenv').config();
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC_URL));
 
 // Load the contract ABI from your compiled contract JSON file.
-const contractJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../../ethereum/build/UniversityCertificateManagement.json'), 'utf8'));
+const contractJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../blockchain/UniversityCertificateManagement.json'), 'utf8'));
 const contractABI = contractJson.abi;
 const contractAddress = process.env.CONTRACT_ADDRESS;
 const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
