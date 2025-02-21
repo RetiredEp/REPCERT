@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const {verifyCertificate} = require('../controllers/verifierController');
 
-// Render verifier page placeholder
-router.get('/verify', (req, res) => {
-    res.send("<h2>Verifier - Verify Certificates</h2><p>Verifier functionality coming soon!</p>");
-});
+router.get('/verify', verifyCertificate);
 
 module.exports = router;
+

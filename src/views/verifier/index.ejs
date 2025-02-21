@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Verify Certificate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        .certificate-details {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .certificate-details p {
+            margin: 5px 0;
+        }
+        .certificate-details a {
+            color: #2ecc71;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .certificate-details a:hover {
+            text-decoration: underline;
+        }
+        .certificate-details small {
+            color: #666;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Verify Certificate</h2>
+        <form action="/verifier/verify" method="GET">
+            <input type="text" name="certificateId" placeholder="Enter Certificate ID" required>
+            <button type="submit">Verify</button>
+        </form>
+        <hr>
+        <h3>Verification Result:</h3>
+        <p><%= result %></p>
+        <% if (certificateDetails) { %>
+            <div class="certificate-details">
+                <h4>Certificate Details:</h4>
+                <p><strong>ID:</strong> <%= certificateDetails.id %></p>
+                <p><strong>Certificate CID:</strong> 
+                    <a href="https://ipfs.io/ipfs/<%= certificateDetails.certificateCID %>" target="_blank">
+                        <%= certificateDetails.certificateCID %>
+                        <small>(Click to view)</small>
+                    </a>
+                </p>
+                <p><strong>Issue Date:</strong> <%= 
+                    typeof certificateDetails.issueDate === 'number' 
+                    ? new Date(certificateDetails.issueDate * 1000).toLocaleString() 
+                    : 'Invalid Date' 
+                %></p>
+                <p><strong>Validity:</strong> <%= certificateDetails.isValid ? "Valid" : "Revoked" %></p>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
