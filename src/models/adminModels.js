@@ -47,4 +47,45 @@ async function insertCertificateDetails(certificateId, certificateCID, txHash) {
     await pool.query(query, [certificateId, certificateCID, txHash]);
 }
 
-module.exports = { getPendingApprovals, getPendingApproval, approveRequest, rejectRequest , insertCertificateDetails };
+// get rejected certificates from db
+async function getRejectedCertificates() {
+    const query = `
+        SELECT s.id, s.student_name, s.student_id, s.course, s.certificate_cid, s.status 
+        FROM submissions s
+        WHERE s.status = 'rejected';
+    `;
+    const result = await pool.query(query);
+    return result.rows;
+}
+
+// get approved certificates from db with join
+async function getApprovedCertificates() {
+    const query = `
+        SELECT 
+            s.id,
+            s.student_name,
+            s.student_id,
+            s.course,
+            s.certificate_cid,
+            c.certificate_id,
+            c.tx_hash,
+            c.issued_at,
+            c.is_valid
+        FROM submissions s
+        INNER JOIN certificates c ON s.certificate_id = c.certificate_id
+        WHERE s.status = 'approved'
+        ORDER BY c.issued_at DESC;
+    `;
+    const result = await pool.query(query);
+    return result.rows;
+}
+
+module.exports = { 
+    getPendingApprovals, 
+    getPendingApproval, 
+    approveRequest, 
+    rejectRequest, 
+    insertCertificateDetails,
+    getRejectedCertificates,
+    getApprovedCertificates
+};

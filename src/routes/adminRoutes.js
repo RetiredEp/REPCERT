@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getPendingApprovalsPage, approveSubmission, rejectSubmission } = require('../controllers/adminController');
+const { getPendingApprovalsPage, approveSubmission, rejectSubmission, getRejectedCertificatesPage, getApprovedCertificatesPage } = require('../controllers/adminController');
 
 // Render admin dashboard placeholder
 router.get('/dashboard', (req, res) => {
@@ -18,13 +18,9 @@ router.post('/approve-request/:id', approveSubmission);
 router.post('/reject-request/:id', rejectSubmission);
 
 // Render approved certificates placeholder
-router.get('/approved-certificates', (req, res) => {
-    res.render('admin/approved-certificates');
-});
+router.get('/approved-certificates', getApprovedCertificatesPage);
 
 // Render rejected certificates placeholder
-router.get('/rejected-certificates', (req, res) => {
-    res.render('admin/rejected-certificates');
-});
+router.get('/rejected-certificates', getRejectedCertificatesPage);
 
 module.exports = router;

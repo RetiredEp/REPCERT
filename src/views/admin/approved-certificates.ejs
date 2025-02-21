@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Approved Certificates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        .certificate-link {
+            color: #2ecc71;
+            text-decoration: none;
+        }
+        .certificate-link:hover {
+            text-decoration: underline;
+        }
+        .blockchain-link {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .blockchain-link:hover {
+            text-decoration: underline;
+        }
+        .status-valid {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .status-invalid {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Approved Certificates</h2>
+        
+        <% if (approvedCertificates && approvedCertificates.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Certificate ID</th>
+                        <th>Student Name</th>
+                        <th>Student ID</th>
+                        <th>Course</th>
+                        <th>Certificate</th>
+                        <th>Blockchain Info</th>
+                        <th>Issue Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% approvedCertificates.forEach(cert => { %>
+                        <tr>
+                            <td><%= cert.certificate_id %></td>
+                            <td><%= cert.student_name %></td>
+                            <td><%= cert.student_id %></td>
+                            <td><%= cert.course %></td>
+                            <td>
+                                <a href="https://ipfs.io/ipfs/<%= cert.certificate_cid %>" 
+                                   target="_blank"
+                                   class="certificate-link">
+                                    View Certificate
+                                </a>
+                            </td>
+                            <td>
+                                <a href="https://sepolia.etherscan.io/tx/<%= cert.tx_hash %>" 
+                                   target="_blank"
+                                   class="blockchain-link">
+                                    View Transaction
+                                </a>
+                            </td>
+                            <td><%= new Date(cert.issued_at).toLocaleString() %></td>
+                            <td class="<%= cert.is_valid ? 'status-valid' : 'status-invalid' %>">
+                                <%= cert.is_valid ? 'Valid' : 'Revoked' %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <div class="empty-message">
+                <p>No approved certificates found.</p>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 const {uploadToIPFS} = require('../config/ipfs');
-const {getPendingApprovals, getPendingApproval, approveRequest, rejectRequest, insertCertificateDetails} = require('../models/adminModels');
+const {getPendingApprovals, getPendingApproval, approveRequest, rejectRequest, insertCertificateDetails, getRejectedCertificates, getApprovedCertificates} = require('../models/adminModels');
 const {issueCertificateOnBlockchain} = require('../blockchain/contractHelper');
 const pool = require('../config/db');
 
@@ -80,4 +80,40 @@ async function rejectSubmission(req, res) {
     }
 }
 
-module.exports = {getPendingApprovalsPage, approveSubmission, rejectSubmission};
+async function getRejectedCertificatesPage(req, res) {
+    console.log('📋 Fetching rejected certificates...');
+    try {
+        const rejectedCertificates = await getRejectedCertificates();
+        console.log(`✅ Found ${rejectedCertificates.length} rejected certificates`);
+        res.render('admin/rejected-certificates', { rejectedCertificates });
+    } catch (error) {
+        console.error("❌ Error fetching rejected certificates:", {
+            error: error.message,
+            stack: error.stack
+        });
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+async function getApprovedCertificatesPage(req, res) {
+    console.log('📋 Fetching approved certificates...');
+    try {
+        const approvedCertificates = await getApprovedCertificates();
+        console.log(`✅ Found ${approvedCertificates.length} approved certificates`);
+        res.render('admin/approved-certificates', { approvedCertificates });
+    } catch (error) {
+        console.error("❌ Error fetching approved certificates:", {
+            error: error.message,
+            stack: error.stack
+        });
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+module.exports = {
+    getPendingApprovalsPage, 
+    approveSubmission, 
+    rejectSubmission,
+    getRejectedCertificatesPage,
+    getApprovedCertificatesPage
+};
