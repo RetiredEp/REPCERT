@@ -29,7 +29,7 @@ router.get('/google/callback',
 
     } else if (email.endsWith('@vitap.ac.in') || (process.env.NODE_ENV === 'development' && email === process.env.ADMIN_OVERRIDE_EMAIL)) {
       req.session.adminEmail = email;
-      res.redirect(`/admin/pending-approvals`);
+      res.redirect(`/admin/dashboard`);
     } else {
       res.redirect('/');
     }
